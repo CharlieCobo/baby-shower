@@ -61,7 +61,7 @@ export function createAppStore(services: AppServices) {
     },
 
     async loadEvent() {
-      set({ event: { status: 'loading', value: get().event.value } })
+      if (get().event.status === 'error') set({ event: { status: 'loading', value: null } })
       try {
         const value = await getEvent(services)()
         set({ event: { status: 'ready', value } })

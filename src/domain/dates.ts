@@ -81,3 +81,22 @@ export function rsvpDeadlineFromDay(day: string): Date {
     second: 59,
   })
 }
+
+/** Fecha y hora "de pared" en Madrid, para rellenar formularios: { date: "2026-12-06", time: "15:00" }. */
+export function toEventWallTime(date: Date): { date: string; time: string } {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: EVENT_TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(date)
+  const get = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((p) => p.type === type)?.value ?? ''
+  return {
+    date: `${get('year')}-${get('month')}-${get('day')}`,
+    time: `${get('hour')}:${get('minute')}`,
+  }
+}

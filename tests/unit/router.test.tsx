@@ -8,8 +8,8 @@ describe('router', () => {
     ['/', es.invitation.title],
     ['/regalos', es.gifts.title],
     ['/asistencia', es.rsvp.title],
-    ['/admin', es.pages.admin.title],
-    ['/admin/regalos', es.pages.adminGifts.title],
+    ['/admin', es.admin.login.title],
+    ['/admin/regalos', es.admin.login.title],
     ['/no-existe', es.pages.notFound.title],
   ])('%s muestra su página', async (path, title) => {
     renderApp(path)

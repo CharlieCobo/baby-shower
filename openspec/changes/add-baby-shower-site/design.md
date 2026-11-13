@@ -268,7 +268,7 @@ src/
 ```
 Rutas (`react-router`, `basename` `/baby-shower`):
 - Invitados, con barra de navegación inferior Invitación · Regalos · RSVP: `/` (invitación), `/regalos`, `/asistencia` (formulario y pantalla de gracias).
-- Admin ("Zona de papás"), con pestañas Respuestas | Regalos: `/admin` (login, acceso denegado o respuestas) y `/admin/regalos`.
+- Admin ("Zona de papás"), con pestañas Respuestas | Regalos | Evento: `/admin` (login, acceso denegado o respuestas), `/admin/regalos` y `/admin/evento` (edición de `config/event`). El panel se carga en un chunk aparte (`React.lazy`), así los invitados no descargan su código.
 
 Suscripción en tiempo real (`onSnapshot`) a `gifts` para que, si otro invitado reserva, la UI se actualice al momento. La consulta es `orderBy('order')` y los regalos inactivos se filtran en el cliente: así no hace falta índice compuesto (`active` + `order`), y no se pierde privacidad porque `gifts` es de lectura pública de todos modos.
 
@@ -324,6 +324,8 @@ Desviaciones deliberadas respecto a los diseños:
 - La imagen del regalo se pega como URL (sin zona de subida).
 - Se elimina el texto "los nombres se revelan si activas el modo apertura": las reservas no guardan nombres.
 - Las filas de reserva del admin muestran solo "Reserva · fecha, hora" (sin estados como "Vía enlace web" o "Confirmado").
+- Se añade una tercera pestaña "Evento" para editar `config/event` (requisito "Configuración del evento"), que no tiene pantalla en Stitch.
+- La hoja "Editar regalo" no tiene selector de unidades al reservar ni zona de subida: la cantidad se edita con un contador que no baja de las unidades reservadas.
 
 ## Risks / Trade-offs
 - **Borrar caché = nuevo UID** → el invitado pierde la posibilidad de liberar su reserva desde ese navegador. Mitigación: texto en la UI ("si cambias de móvil, escríbenos para liberarlo") + liberación desde el admin.

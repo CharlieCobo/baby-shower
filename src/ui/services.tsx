@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { useStore } from 'zustand'
 import type {
+  AdminAuthService,
+  AdminRepository,
   AuthService,
   Clock,
   EventRepository,
@@ -17,9 +19,12 @@ export interface AppServices {
   rsvps: RsvpRepository
   events: EventRepository
   clock: Clock
+  adminAuth: AdminAuthService
+  admin: AdminRepository
 }
 
 const StoreContext = createContext<AppStore | null>(null)
+const ServicesContext = createContext<AppServices | null>(null)
 
 /** Crea el store de la app sobre los servicios (Firebase en producción, memoria en tests). */
 export function AppProvider({
@@ -36,11 +41,22 @@ export function AppProvider({
     store.getState().start()
   }, [store])
 
-  return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
+  return (
+    <ServicesContext.Provider value={services}>
+      <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
+    </ServicesContext.Provider>
+  )
 }
 
 export function useAppStore<T>(selector: (state: AppState) => T): T {
   const store = useContext(StoreContext)
   if (!store) throw new Error('useAppStore debe usarse dentro de <AppProvider>')
   return useStore(store, selector)
+}
+
+/** Servicios crudos (los usa el panel de admin, que no pasa por el store de invitados). */
+export function useServices(): AppServices {
+  const services = useContext(ServicesContext)
+  if (!services) throw new Error('useServices debe usarse dentro de <AppProvider>')
+  return services
 }

@@ -42,6 +42,11 @@ export default tseslint.config(
     },
   },
   {
+    // Exportan hooks/rutas además de componentes a propósito.
+    files: ['src/ui/services.tsx', 'src/ui/router.tsx'],
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
+  {
     files: ['*.config.{ts,js}', 'scripts/**', 'tests/rules/**', 'tests/e2e/**'],
     languageOptions: { globals: globals.node },
   },

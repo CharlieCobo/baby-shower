@@ -1,4 +1,5 @@
 // Punto de composición: conecta los puertos con Firebase.
+import { createFirebaseAdminAuth, createFirestoreAdminRepository } from './admin'
 import { auth, db } from './app'
 import { createFirebaseAuthService } from './auth-service'
 import {
@@ -15,5 +16,7 @@ export function createFirebaseServices() {
     reservations: createFirestoreReservationRepository(db),
     rsvps: createFirestoreRsvpRepository(db),
     events: createFirestoreEventRepository(db),
+    adminAuth: createFirebaseAdminAuth(auth, db),
+    admin: createFirestoreAdminRepository(db),
   }
 }

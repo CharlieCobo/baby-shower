@@ -26,11 +26,11 @@
 - [x] 4.5 Accesibilidad básica (foco, labels, contraste) y revisión mobile a 360 px
 
 ## 5. Admin
-- [ ] 5.1 Login Google + guard por allowlist (lectura de `config/admins`), con las pantallas de inicio de sesión y acceso denegado de Stitch
-- [ ] 5.2 Pestaña Respuestas: resumen, búsqueda, lista con alergias y mensajes, export CSV
-- [ ] 5.3 Pestaña Regalos: resumen, CRUD con bottom sheet "Editar regalo", switch Visible, reordenación por arrastre
-- [ ] 5.4 Reservas por regalo como filas anónimas con liberación
-- [ ] 5.5 Edición de los datos del evento (`config/event`)
+- [x] 5.1 Login Google + guard por allowlist (lectura de `config/admins`), con las pantallas de inicio de sesión y acceso denegado de Stitch
+- [x] 5.2 Pestaña Respuestas: resumen, búsqueda, lista con alergias y mensajes, export CSV
+- [x] 5.3 Pestaña Regalos: resumen, CRUD con bottom sheet "Editar regalo", switch Visible, reordenación por arrastre
+- [x] 5.4 Reservas por regalo como filas anónimas con liberación
+- [x] 5.5 Edición de los datos del evento (`config/event`)
 
 ## 6. Calidad y despliegue
 - [ ] 6.1 E2E Playwright contra emuladores: reservar, liberar, carrera por última unidad (2 contextos), RSVP, acceso admin denegado

@@ -14,7 +14,8 @@ Abreviaturas de ficheros:
 - Reglas: `GR` = `tests/rules/gift-registry.rules.test.ts`, `RS` = `tests/rules/rsvp.rules.test.ts`, `AD` = `tests/rules/admin.rules.test.ts`, `EI` = `tests/rules/event-info.rules.test.ts`.
 - Adaptadores de Firestore contra el emulador (con reglas): `FA` = `tests/rules/firestore-adapters.test.ts` (tipo `rules`).
 - Unitarios: `DG` = `tests/unit/domain-gift.test.ts`, `DE` = `tests/unit/domain-event.test.ts`, `DR` = `tests/unit/domain-rsvp.test.ts`, `UC` = `tests/unit/use-cases.test.ts`, `CAL` = `tests/unit/calendar.test.ts`, `FMT` = `tests/unit/format.test.ts`.
-- Páginas (Testing Library + backend en memoria): `IP` = `tests/unit/invitation-page.test.tsx`, `GP` = `tests/unit/gifts-page.test.tsx`, `RP` = `tests/unit/rsvp-page.test.tsx`, `RT` = `tests/unit/router.test.tsx`.
+- Páginas (Testing Library + backend en memoria): `IP` = `tests/unit/invitation-page.test.tsx`, `GP` = `tests/unit/gifts-page.test.tsx`, `RP` = `tests/unit/rsvp-page.test.tsx`, `RT` = `tests/unit/router.test.tsx`, `AP` = `tests/unit/admin-pages.test.tsx`.
+- Admin: `DA` = `tests/unit/domain-admin.test.ts` (unit), `FAD` = `tests/rules/firestore-admin.test.ts` (adaptador de admin contra el emulador con reglas).
 
 ## event-info
 
@@ -108,25 +109,26 @@ Abreviaturas de ficheros:
 | Escenario | Tipo | Test | Estado |
 |---|---|---|---|
 | Admin autorizado | rules | `AD` › Admin autorizado: puede leer los datos privados | ✅ |
-| Admin autorizado | unit / e2e | Guard de `/admin` con allowlist | ⏳ 5.1 |
+| Admin autorizado | unit | `AP` › Admin autorizado: accede al panel con pestañas · sin sesión muestra el inicio de sesión con Google | ✅ |
 | Usuario no autorizado | rules | `AD` › Usuario no autorizado: las reglas rechazan cualquier lectura… | ✅ |
-| Usuario no autorizado | e2e | Pantalla "No tienes acceso" | ⏳ 6.1 |
+| Usuario no autorizado | unit | `AP` › Usuario no autorizado: ve "No tienes acceso" · `FAD` › un usuario fuera de la allowlist no puede crear regalos | ✅ |
+| Usuario no autorizado | e2e | Login real (popup del emulador de Auth) con un email fuera de la allowlist | ⏳ 6.1 |
 | Comprobación de admin desde el cliente | rules | `AD` › solo funciona con email verificado en la allowlist · nadie puede escribir config/admins · sin config/admins nadie es admin | ✅ |
 | Datos de regalo inválidos | rules | `AD` › Datos de regalo inválidos (9 casos) | ✅ |
-| Datos de regalo inválidos | unit | Errores en el formulario "Editar regalo" | ⏳ 5.3 |
+| Datos de regalo inválidos | unit | `DA` › Datos de regalo inválidos · `AP` › Datos de regalo inválidos: la UI muestra el error | ✅ |
 | Reducir cantidad por debajo de lo reservado | rules | `AD` › Reducir cantidad por debajo de lo reservado | ✅ |
-| Reducir cantidad por debajo de lo reservado | unit | La UI lo impide e indica las unidades reservadas | ⏳ 5.3 |
-| Editar un regalo mientras alguien reserva | rules | `AD` › Editar un regalo mientras alguien reserva · Editar con un reservedCount desfasado | ✅ |
-| Crear un regalo | rules | `AD` › Crear un regalo: se guarda con reservedCount 0 · …rechazan crearlo con reservas | ✅ |
+| Reducir cantidad por debajo de lo reservado | unit / rules | `DA` › Reducir cantidad por debajo de lo reservado · `AP` › la UI lo impide e indica cuántas hay · `FAD` › las reglas lo rechazan | ✅ |
+| Editar un regalo mientras alguien reserva | rules | `AD` › Editar un regalo mientras alguien reserva · Editar con un reservedCount desfasado · `FAD` › no pisa reservedCount y borra los opcionales vaciados | ✅ |
+| Crear un regalo | rules / unit | `AD` › Crear un regalo: se guarda con reservedCount 0 · …rechazan crearlo con reservas · `FAD` › Crear un regalo · `AP` › Crear un regalo desde la hoja "Nuevo regalo" | ✅ |
 | Borrar un regalo con reservas | rules | `AD` › Borrar un regalo con reservas | ✅ |
-| Borrar un regalo con reservas | unit | Confirmación antes de borrar | ⏳ 5.3 |
-| Cambiar la fecha límite de RSVP | rules | `AD` › Cambiar la fecha límite de RSVP: las reglas aplican el nuevo plazo | ✅ |
-| La fecha límite incluye el día completo | unit | `tests/unit/dates.test.ts` › rsvpDeadlineFromDay (verano, invierno, cambio de hora) | ✅ |
-| Datos del evento inválidos | rules | `AD` › Datos del evento inválidos (4 casos) · nadie puede borrar config/event | ✅ |
+| Borrar un regalo con reservas | unit / rules | `AP` › pide confirmación y borra también las reservas · `FAD` › borra el regalo y sus reservas | ✅ |
+| Cambiar la fecha límite de RSVP | rules / unit | `AD` › las reglas aplican el nuevo plazo · `FAD` › saveEvent pasa las reglas · `AP` › se guarda y la landing la refleja | ✅ |
+| La fecha límite incluye el día completo | unit | `tests/unit/dates.test.ts` › rsvpDeadlineFromDay (verano, invierno, cambio de hora) · `DA` › se guarda a las 23:59:59 de Madrid | ✅ |
+| Datos del evento inválidos | rules / unit | `AD` › Datos del evento inválidos (4 casos) · nadie puede borrar config/event · `DA` › fin anterior al inicio y Maps sin https · `AP` › errores junto al campo | ✅ |
 | Ver reservas de un regalo | rules | `AD` › Ver reservas de un regalo | ✅ |
-| Ver reservas de un regalo | unit | Filas anónimas "Reserva · fecha, hora" con "Liberar" | ⏳ 5.4 |
-| Liberar una reserva huérfana | rules | `AD` › Liberar una reserva huérfana · con la lista cerrada · sin bajar el contador se rechaza | ✅ |
-| Exportar asistentes | unit | Generación del CSV | ⏳ 5.2 |
+| Ver reservas de un regalo | unit / rules | `AP` › Ver reservas de un regalo y Liberar (fila anónima "Reserva · fecha, hora") · `FAD` › el admin recibe las listas completas | ✅ |
+| Liberar una reserva huérfana | rules / unit | `AD` › Liberar una reserva huérfana · con la lista cerrada · sin bajar el contador se rechaza · `FAD` › Liberar una reserva huérfana · `AP` › Liberar | ✅ |
+| Exportar asistentes | unit | `DA` › CSV con nombre, asistencia, acompañantes, alergias, mensaje y fecha · `AP` › descarga un CSV | ✅ |
 
 ## Checklists manuales
 

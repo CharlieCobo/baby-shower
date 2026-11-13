@@ -7,6 +7,8 @@ interface BottomSheetProps {
   title: string
   onClose: () => void
   children: ReactNode
+  /** Formularios: contenido alineado a la izquierda y con scroll propio. */
+  form?: boolean
 }
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), textarea, [tabindex="0"]'
@@ -15,7 +17,7 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), texta
  * Hoja inferior modal: atrapa el foco, se cierra con Escape o tocando el fondo
  * y devuelve el foco al elemento que la abrió.
  */
-export function BottomSheet({ open, title, onClose, children }: BottomSheetProps) {
+export function BottomSheet({ open, title, onClose, children, form = false }: BottomSheetProps) {
   const titleId = useId()
   const sheetRef = useRef<HTMLDivElement>(null)
   // Se guarda en una ref para no reiniciar el efecto (y el foco) en cada render.
@@ -73,7 +75,9 @@ export function BottomSheet({ open, title, onClose, children }: BottomSheetProps
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative flex w-full max-w-[480px] flex-col items-center rounded-t-[32px] bg-surface-container-lowest p-space-lg pb-[max(1.5rem,env(safe-area-inset-bottom))] text-center shadow-[0_-10px_35px_rgba(74,31,61,0.25)]"
+        className={`relative flex max-h-[92dvh] w-full max-w-[480px] flex-col overflow-y-auto rounded-t-[32px] bg-surface-container-lowest p-space-lg pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-[0_-10px_35px_rgba(74,31,61,0.25)] ${
+          form ? 'items-stretch text-left' : 'items-center text-center'
+        }`}
         onClick={(event) => event.stopPropagation()}
       >
         <button
