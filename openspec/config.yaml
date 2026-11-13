@@ -1,0 +1,69 @@
+schema: spec-driven
+
+context: |
+  Language: es
+  All artifacts must be written in es.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  ## Propósito
+  Web pública para el baby shower de Carlos y su pareja. Los invitados entran con un
+  enlace (sin registrarse) para: ver la información del evento, confirmar asistencia
+  (RSVP) y reservar regalos de forma anónima (nadie ve quién reservó qué, solo que
+  un regalo ya está cogido). Los datos MUST persistir entre visitas y dispositivos, y
+  la lista MUST resistir que un invitado borre o modifique lo que no le corresponde.
+
+  ## Stack
+  - React 19 + TypeScript strict + Vite; pnpm; ESLint + Prettier.
+  - react-router con basename `/baby-shower` (servida en subdirectorio).
+  - Zustand para estado de UI, por encima de los casos de uso (nunca toca Firebase).
+  - Firebase: Firestore y Auth (Anonymous silencioso para invitados + Google para admin),
+    sin App Check ni reCAPTCHA. Proyecto `baby-shower-ac32e`; config web vía variables
+    `VITE_FIREBASE_*` del entorno `github-pages` de GitHub.
+  - Hosting: GitHub Pages (https://charliecobo.github.io/baby-shower/), deploy con
+    GitHub Actions en cada push a `main`.
+  - Tailwind CSS v4 con tokens del design system "Dulce Espera" de Stitch (ver
+    `design.md` § 8). Proyecto Stitch "Baby Shower Dulce Espera RSVP":
+    https://stitch.google.com/projects/16777157230264645811
+  - Tests: Vitest + Testing Library, `@firebase/rules-unit-testing` contra emulador,
+    Playwright (E2E).
+
+  ## Arquitectura
+  Hexagonal ligera: `domain/` (tipos y reglas puras), `application/` (casos de uso),
+  `infrastructure/firebase/` (adaptadores), `ui/` (React). Casos de uso con puertos e
+  implementación in-memory para tests.
+
+  ## Dominio
+  - Gift: ítem con categoría fija (ropa, higiene, paseo, habitación, juguetes) y
+    cantidad (p. ej. "Pañales talla 1 × 4"); opcionales: descripción, enlace, imagen,
+    precio orientativo.
+  - Reservation: un invitado se compromete a traer 1 unidad. Anónima para el resto;
+    internamente ligada al UID anónimo del dispositivo para poder deshacerla.
+  - RSVP: nombre, nº de acompañantes, alergias/restricciones y mensaje opcionales.
+    Solo la ven los admins.
+  - No hay lista de invitados: todos reciben el mismo enlace.
+  - Admin: Carlos y su pareja (cuentas Google en allowlist).
+  - Datos del evento en `config/event` (Firestore), editables desde el admin. Valores
+    del seed aún pendientes (fecha, lugar, límite RSVP, cierre de lista, nombre de la
+    bebé; los diseños usan "Lucía").
+
+  ## Restricciones
+  - Invitados sin cuenta ni login visible.
+  - Privacidad: los invitados nunca pueden leer RSVPs ni quién reservó.
+  - Debe caber en el plan gratuito (Spark) de Firebase.
+  - Mobile-first: la mayoría abrirá el enlace desde WhatsApp en el móvil.
+
+rules:
+  design:
+    - Respetar las capas hexagonales; la UI nunca importa el SDK de Firebase.
+    - Todo cambio de datos debe indicar cómo afecta a las reglas de Firestore y a la privacidad.
+  tasks:
+    - Incluir tareas de test para cada regla de Firestore nueva o modificada (casos permitidos y denegados en emulador).
+    - Incluir tests unitarios de casos de uso sobre el adaptador in-memory.
+    - Si el cambio toca reservar/liberar regalo o RSVP, incluir o actualizar el E2E de Playwright.
+
+operations:
+  apply:
+    guidance:
+      - TypeScript strict, sin `any`; componentes funcionales y hooks propios para el acceso a datos.
+      - Nombres de código en inglés; textos de UI en español centralizados en `src/i18n/es.ts`.
+      - Commits convencionales (feat:, fix:, chore:…), trunk-based sobre `main`.
