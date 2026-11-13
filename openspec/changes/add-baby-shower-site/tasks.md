@@ -1,6 +1,6 @@
 ## 1. Setup
 - [x] 1.1 Migrar el andamiaje actual a Vite + React + TS (strict) con pnpm, ESLint, Prettier y Tailwind; retirar `FirebaseStatus.jsx`, el store de ejemplo, `.oxlintrc.json` y `package-lock.json`
-- [ ] 1.2 En el proyecto Firebase existente (`baby-shower-ac32e`): activar Auth (Anonymous + Google), añadir `charliecobo.github.io` a dominios autorizados
+- [x] 1.2 En el proyecto Firebase existente (`baby-shower-ac32e`): activar Auth (Anonymous + Google), añadir `charliecobo.github.io` a dominios autorizados
 - [x] 1.3 Configurar `firebase.json`, `.firebaserc`, emuladores (auth, firestore) y variables `VITE_FIREBASE_*`
 - [x] 1.4 Estructura de carpetas hexagonal (`domain`, `application`, `infrastructure/firebase`, `ui`, `i18n`) y router con `basename` `/baby-shower`
 - [x] 1.5 Trasladar el design system "Dulce Espera" de Stitch al `@theme` de Tailwind (colores, radios, espaciados, tipografías Comfortaa y Nunito Sans, Material Symbols)
