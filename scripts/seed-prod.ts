@@ -37,11 +37,15 @@ function loadData(): SeedData {
 
 async function confirm(data: SeedData): Promise<boolean> {
   console.log(`Destino: ${useEmulator ? 'EMULADOR local' : `PRODUCCIÓN (${PROJECT_ID})`}`)
-  console.log(`  admins: ${data.admins.join(', ')}`)
+  console.log(`  admins: ${data.admins ? data.admins.join(', ') : '(sin cambios)'}`)
   console.log(
-    `  evento: ${data.event.title} · ${data.event.startsAt} · RSVP hasta ${data.event.rsvpDeadline}`,
+    `  evento: ${
+      data.event
+        ? `${data.event.title} · ${data.event.startsAt} · RSVP hasta ${data.event.rsvpDeadline}`
+        : '(sin cambios)'
+    }`,
   )
-  console.log(`  regalos: ${data.gifts.length}`)
+  console.log(`  regalos: ${data.gifts ? data.gifts.length : '(sin cambios)'}`)
   if (useEmulator || skipConfirm) return true
   const rl = createInterface({ input: process.stdin, output: process.stdout })
   const answer = await rl.question(`Escribe "${PROJECT_ID}" para confirmar: `)
@@ -50,25 +54,29 @@ async function confirm(data: SeedData): Promise<boolean> {
 }
 
 async function write(db: Firestore, data: SeedData) {
-  await db.doc('config/admins').set({ emails: data.admins.map((e) => e.trim().toLowerCase()) })
+  if (data.admins) {
+    await db.doc('config/admins').set({ emails: data.admins.map((e) => e.trim().toLowerCase()) })
+  }
 
   const { event } = data
-  await db.doc('config/event').set({
-    title: event.title,
-    startsAt: Timestamp.fromDate(parseEventDateTime(event.startsAt)),
-    endsAt: Timestamp.fromDate(parseEventDateTime(event.endsAt)),
-    place: event.place,
-    mapsUrl: event.mapsUrl,
-    rsvpDeadline: Timestamp.fromDate(rsvpDeadlineFromDay(event.rsvpDeadline)),
-    ...(event.registryClosesAt
-      ? { registryClosesAt: Timestamp.fromDate(parseEventDateTime(event.registryClosesAt)) }
-      : {}),
-    ...(event.babyName ? { babyName: event.babyName } : {}),
-  })
+  if (event)
+    await db.doc('config/event').set({
+      title: event.title,
+      startsAt: Timestamp.fromDate(parseEventDateTime(event.startsAt)),
+      endsAt: Timestamp.fromDate(parseEventDateTime(event.endsAt)),
+      place: event.place,
+      mapsUrl: event.mapsUrl,
+      rsvpDeadline: Timestamp.fromDate(rsvpDeadlineFromDay(event.rsvpDeadline)),
+      ...(event.registryClosesAt
+        ? { registryClosesAt: Timestamp.fromDate(parseEventDateTime(event.registryClosesAt)) }
+        : {}),
+      ...(event.babyName ? { babyName: event.babyName } : {}),
+    })
 
   let created = 0
   let updated = 0
-  for (const [order, gift] of data.gifts.entries()) {
+  const gifts = data.gifts ?? []
+  for (const [order, gift] of gifts.entries()) {
     const { id, ...fields } = gift
     const ref = db.doc(`gifts/${id}`)
     await db.runTransaction(async (tx) => {
@@ -108,7 +116,8 @@ async function write(db: Firestore, data: SeedData) {
     })
   }
 
-  const known = new Set(data.gifts.map((g) => g.id))
+  if (!data.gifts) return { created, updated, orphans: [] }
+  const known = new Set(gifts.map((g) => g.id))
   const orphans = (await db.collection('gifts').get()).docs
     .map((d) => d.id)
     .filter((id) => !known.has(id))

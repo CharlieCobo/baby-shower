@@ -2,8 +2,9 @@
 // Replica las restricciones de firestore.rules para fallar antes de escribir.
 import { parseEventDateTime, rsvpDeadlineFromDay } from '../../src/domain/dates'
 
-export const CATEGORIES = ['ropa', 'higiene', 'paseo', 'habitacion', 'juguetes'] as const
-export type Category = (typeof CATEGORIES)[number]
+import { CATEGORIES, type Category } from '../../src/domain/gift'
+
+export { CATEGORIES, type Category }
 
 export interface SeedGift {
   id: string
@@ -17,9 +18,10 @@ export interface SeedGift {
   active?: boolean
 }
 
+// Cada sección es opcional: solo se escribe lo que venga en el fichero.
 export interface SeedData {
-  admins: string[]
-  event: {
+  admins?: string[]
+  event?: {
     title: string
     startsAt: string // "AAAA-MM-DDTHH:MM", hora de Madrid
     endsAt: string
@@ -29,7 +31,7 @@ export interface SeedData {
     registryClosesAt?: string // "AAAA-MM-DDTHH:MM"
     babyName?: string
   }
-  gifts: SeedGift[]
+  gifts?: SeedGift[]
 }
 
 const isObject = (v: unknown): v is Record<string, unknown> =>
@@ -49,15 +51,26 @@ const tryDate = (fn: () => Date) => {
 /** Devuelve la lista de errores (vacía si los datos son válidos). */
 export function validateSeedData(data: unknown): string[] {
   const errors: string[] = []
-  if (!isObject(data)) return ['El fichero debe contener un objeto con admins, event y gifts.']
+  if (!isObject(data)) return ['El fichero debe contener un objeto con admins, event y/o gifts.']
 
   const { admins, event, gifts } = data
-  if (!Array.isArray(admins) || admins.length === 0 || !admins.every(isEmail)) {
+  for (const key of Object.keys(data)) {
+    if (!['admins', 'event', 'gifts'].includes(key)) errors.push(`${key}: sección no permitida.`)
+  }
+  if (admins === undefined && event === undefined && gifts === undefined) {
+    errors.push('El fichero no tiene ninguna sección (admins, event o gifts).')
+  }
+  if (
+    admins !== undefined &&
+    (!Array.isArray(admins) || admins.length === 0 || !admins.every(isEmail))
+  ) {
     errors.push('admins: lista de emails con al menos uno.')
   }
 
-  if (!isObject(event)) {
-    errors.push('event: falta el objeto del evento.')
+  if (event === undefined) {
+    // sin evento: no se toca config/event
+  } else if (!isObject(event)) {
+    errors.push('event: debe ser un objeto.')
   } else {
     const allowed = [
       'title',
@@ -95,7 +108,9 @@ export function validateSeedData(data: unknown): string[] {
     }
   }
 
-  if (!Array.isArray(gifts)) {
+  if (gifts === undefined) {
+    // sin regalos: no se tocan
+  } else if (!Array.isArray(gifts)) {
     errors.push('gifts: debe ser una lista.')
   } else {
     const ids = new Set<string>()

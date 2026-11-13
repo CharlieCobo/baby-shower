@@ -13,10 +13,10 @@
 - [x] 2.4 Crear `test-map.md` (escenario → test, con tipo `rules` / `unit` / `e2e` / `manual`; los `manual` con su checklist) y desplegar las reglas
 
 ## 3. Dominio y casos de uso
-- [ ] 3.1 Tipos y funciones puras (`remaining`, `isAvailable`, `isRegistryOpen`, `isRsvpOpen`, `giftDisplayState`, `daysUntil` / estado de la cuenta atrás, `rsvpDeadlineFromDay` en Europe/Madrid, validación de RSVP)
-- [ ] 3.2 Puertos (`GiftRepository`, `ReservationRepository`, `RsvpRepository`, `EventRepository`, `AuthService`) + adaptadores in-memory
-- [ ] 3.3 Casos de uso `listGifts`, `reserveGift`, `releaseGift`, `submitRsvp`, `getEvent` con tests unitarios
-- [ ] 3.4 Adaptadores Firestore (reserva/liberación con transacción, `onSnapshot`)
+- [x] 3.1 Tipos y funciones puras (`remaining`, `isAvailable`, `isRegistryOpen`, `isRsvpOpen`, `giftDisplayState`, `daysUntil` / estado de la cuenta atrás, `rsvpDeadlineFromDay` en Europe/Madrid, validación de RSVP)
+- [x] 3.2 Puertos (`GiftRepository`, `ReservationRepository`, `RsvpRepository`, `EventRepository`, `AuthService`) + adaptadores in-memory
+- [x] 3.3 Casos de uso `listGifts`, `reserveGift`, `releaseGift`, `submitRsvp`, `getEvent` con tests unitarios
+- [x] 3.4 Adaptadores Firestore (reserva/liberación con transacción, `onSnapshot`)
 
 ## 4. UI invitados
 - [ ] 4.1 Bootstrap de auth anónima silenciosa; layout con barra de navegación inferior (Invitación · Regalos · RSVP)
