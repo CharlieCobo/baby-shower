@@ -25,3 +25,22 @@ dist-ssr
 
 .env
 .env.local
+
+# Metadatos de Windows/WSL
+*:Zone.Identifier
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+*-debug.log
+
+# Credenciales del Admin SDK (seed): nunca en el repo
+service-account*.json
+scripts/seed-data.local.json
+
+# Tests
+coverage
+playwright-report
+test-results

@@ -1,1 +1,173 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/*
+  Design system "Dulce Espera" (Stitch, proyecto 16777157230264645811).
+  Los nombres de los tokens coinciden con los del HTML exportado por Stitch,
+  así que clases como `bg-surface-container`, `text-headline-md` o `p-space-lg` funcionan igual.
+*/
+
+@theme {
+  /* Colores (Material 3) */
+  --color-surface: #fff8f9;
+  --color-surface-dim: #ffcbe9;
+  --color-surface-bright: #fff8f9;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fff0f6;
+  --color-surface-container: #ffe8f3;
+  --color-surface-container-high: #ffe0f0;
+  --color-surface-container-highest: #ffd8ed;
+  --color-on-surface: #340b29;
+  --color-on-surface-variant: #514348;
+  --color-inverse-surface: #4c213f;
+  --color-inverse-on-surface: #ffecf4;
+  --color-outline: #837378;
+  --color-outline-variant: #d5c1c7;
+  --color-surface-tint: #8a4a65;
+  --color-primary: #8a4a65;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #f4a6c4;
+  --color-on-primary-container: #743852;
+  --color-inverse-primary: #ffb0ce;
+  --color-secondary: #7f4f70;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fdbfe6;
+  --color-on-secondary-container: #7a4a6b;
+  --color-tertiary: #2e685a;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #8ec8b7;
+  --color-on-tertiary-container: #185548;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-primary-fixed: #ffd9e5;
+  --color-primary-fixed-dim: #ffb0ce;
+  --color-on-primary-fixed: #390721;
+  --color-on-primary-fixed-variant: #6e334d;
+  --color-secondary-fixed: #ffd7ee;
+  --color-secondary-fixed-dim: #f1b5db;
+  --color-on-secondary-fixed: #330c2a;
+  --color-on-secondary-fixed-variant: #653857;
+  --color-tertiary-fixed: #b3efdd;
+  --color-tertiary-fixed-dim: #97d2c1;
+  --color-on-tertiary-fixed: #00201a;
+  --color-on-tertiary-fixed-variant: #115043;
+  --color-background: #fff8f9;
+  --color-on-background: #340b29;
+  --color-surface-variant: #ffd8ed;
+  /* Paleta decorativa "candy" */
+  --color-candy-peppermint: #9ed9c8;
+  --color-candy-lilac: #c9b3e6;
+  --color-candy-lemon: #f7d774;
+
+  /* Tipografías */
+  --font-sans: 'Nunito Sans', system-ui, sans-serif;
+  --font-display: 'Comfortaa', ui-rounded, system-ui, sans-serif;
+  --font-display-hero: 'Comfortaa', ui-rounded, system-ui, sans-serif;
+  --font-display-hero-mobile: 'Comfortaa', ui-rounded, system-ui, sans-serif;
+  --font-headline-lg: 'Comfortaa', ui-rounded, system-ui, sans-serif;
+  --font-headline-lg-mobile: 'Comfortaa', ui-rounded, system-ui, sans-serif;
+  --font-headline-md: 'Comfortaa', ui-rounded, system-ui, sans-serif;
+  --font-headline-sm: 'Comfortaa', ui-rounded, system-ui, sans-serif;
+  --font-title-md: 'Nunito Sans', system-ui, sans-serif;
+  --font-body-lg: 'Nunito Sans', system-ui, sans-serif;
+  --font-body-md: 'Nunito Sans', system-ui, sans-serif;
+  --font-body-sm: 'Nunito Sans', system-ui, sans-serif;
+  --font-label-lg: 'Nunito Sans', system-ui, sans-serif;
+  --font-label-md: 'Nunito Sans', system-ui, sans-serif;
+  --font-label-sm: 'Nunito Sans', system-ui, sans-serif;
+
+  /* Escala tipográfica */
+  --text-display-hero: 48px;
+  --text-display-hero--line-height: 56px;
+  --text-display-hero--font-weight: 700;
+  --text-display-hero--letter-spacing: -0.02em;
+  --text-display-hero-mobile: 34px;
+  --text-display-hero-mobile--line-height: 42px;
+  --text-display-hero-mobile--font-weight: 700;
+  --text-display-hero-mobile--letter-spacing: -0.01em;
+  --text-headline-lg: 32px;
+  --text-headline-lg--line-height: 40px;
+  --text-headline-lg--font-weight: 700;
+  --text-headline-lg-mobile: 26px;
+  --text-headline-lg-mobile--line-height: 34px;
+  --text-headline-lg-mobile--font-weight: 700;
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--font-weight: 600;
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 28px;
+  --text-headline-sm--font-weight: 600;
+  --text-title-md: 18px;
+  --text-title-md--line-height: 26px;
+  --text-title-md--font-weight: 700;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--font-weight: 400;
+  --text-label-lg: 16px;
+  --text-label-lg--line-height: 22px;
+  --text-label-lg--font-weight: 700;
+  --text-label-md: 14px;
+  --text-label-md--line-height: 18px;
+  --text-label-md--font-weight: 700;
+  --text-label-md--letter-spacing: 0.02em;
+  --text-label-sm: 12px;
+  --text-label-sm--line-height: 16px;
+  --text-label-sm--font-weight: 600;
+  --text-label-sm--letter-spacing: 0.03em;
+
+  /* Radios */
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-card: 20px;
+
+  /* Espaciados */
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+  --spacing-gutter: 1.25rem;
+  --spacing-margin: 1.5rem;
+
+  /* Elevación */
+  --shadow-card: 0 10px 25px -5px rgb(74 31 61 / 0.06), 0 8px 10px -6px rgb(74 31 61 / 0.04);
+  --shadow-pill: 0 6px 16px rgb(194 120 157 / 0.35);
+  --shadow-pill-pressed: 0 2px 6px rgb(194 120 157 / 0.25);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-surface-container font-body-md text-body-md text-on-surface antialiased;
+    min-height: 100dvh;
+  }
+}
+
+/* Material Symbols Outlined (cargada desde Google Fonts en index.html) */
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  line-height: 1;
+  user-select: none;
+}
+.material-symbols-outlined.filled {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
