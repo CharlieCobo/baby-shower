@@ -4,7 +4,7 @@
 - [x] 1.3 Configurar `firebase.json`, `.firebaserc`, emuladores (auth, firestore) y variables `VITE_FIREBASE_*`
 - [x] 1.4 Estructura de carpetas hexagonal (`domain`, `application`, `infrastructure/firebase`, `ui`, `i18n`) y router con `basename` `/baby-shower`
 - [x] 1.5 Trasladar el design system "Dulce Espera" de Stitch al `@theme` de Tailwind (colores, radios, espaciados, tipografías Comfortaa y Nunito Sans, Material Symbols)
-- [ ] 1.6 Workflow de GitHub Actions con pnpm: lint, typecheck, tests unitarios, tests de reglas en emulador, build con `404.html` y despliegue a GitHub Pages
+- [x] 1.6 Workflow de GitHub Actions con pnpm: lint, typecheck, tests unitarios, tests de reglas en emulador, build con `404.html` y despliegue a GitHub Pages
 
 ## 2. Seguridad primero
 - [ ] 2.1 Escribir `firestore.rules` según `design.md`
