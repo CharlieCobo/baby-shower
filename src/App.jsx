@@ -1,3 +1,4 @@
+import FirebaseStatus from './components/FirebaseStatus'
 import { useAppStore } from './store/useAppStore'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       >
         count is {count}
       </button>
+      <FirebaseStatus />
     </main>
   )
 }
