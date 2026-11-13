@@ -152,6 +152,11 @@
     @apply bg-surface-container font-body-md text-body-md text-on-surface antialiased;
     min-height: 100dvh;
   }
+  /* Foco visible para quien navega con teclado (accesibilidad) */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 /* Material Symbols Outlined (cargada desde Google Fonts en index.html) */

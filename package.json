@@ -22,7 +22,8 @@
     "test:rules": "firebase emulators:exec --only firestore \"vitest run --config vitest.rules.config.ts\"",
     "deploy:rules": "firebase deploy --only firestore:rules",
     "seed:dev": "tsx scripts/seed-dev.ts",
-    "seed:prod": "tsx scripts/seed-prod.ts"
+    "seed:prod": "tsx scripts/seed-prod.ts",
+    "og": "tsx scripts/og/render.ts"
   },
   "dependencies": {
     "firebase": "^13.3.0",
@@ -36,6 +37,7 @@
     "@faker-js/faker": "^10.6.0",
     "@firebase/rules-unit-testing": "^6.0.0",
     "@fission-ai/openspec": "^2.0.0",
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/vite": "^4.3.5",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",

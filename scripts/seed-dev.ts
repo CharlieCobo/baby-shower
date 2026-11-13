@@ -97,7 +97,7 @@ async function seedEvent(db: Firestore) {
   const place = `${faker.helpers.arrayElement(['Jardines', 'Finca', 'Casa'])} ${faker.person.lastName()}`
   const address = `${faker.location.street()}, ${faker.location.buildingNumber()}, ${faker.location.city()}`
   await db.doc('config/event').set({
-    title: 'Baby Shower de Lucía',
+    title: 'Baby Shower de Alex',
     startsAt: Timestamp.fromDate(parseEventDateTime(`${eventDay}T17:00`)),
     endsAt: Timestamp.fromDate(parseEventDateTime(`${eventDay}T21:00`)),
     place: `${place} · ${address}`,
@@ -106,7 +106,7 @@ async function seedEvent(db: Firestore) {
       rsvpDeadlineFromDay(madridDay(daysFromNow(rsvpClosed ? -1 : 20))),
     ),
     ...(registryClosed ? { registryClosesAt: Timestamp.fromDate(daysFromNow(-1 / 24)) } : {}),
-    babyName: 'Lucía',
+    babyName: 'Alex',
   })
 }
 

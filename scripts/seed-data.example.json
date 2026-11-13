@@ -1,14 +1,14 @@
 {
   "admins": ["tu-email@gmail.com", "email-de-tu-pareja@gmail.com"],
   "event": {
-    "title": "Baby Shower de Lucía",
-    "startsAt": "2027-05-24T17:00",
-    "endsAt": "2027-05-24T21:00",
-    "place": "Jardines La Rosaleda · Calle Mayor, 42, Valencia",
-    "mapsUrl": "https://maps.app.goo.gl/xxxxxxxx",
+    "title": "Baby Shower de Alex",
+    "startsAt": "2027-05-22T15:00",
+    "endsAt": "2027-05-22T19:00",
+    "place": "Parque Turia · Jardín del Turia, Valencia",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jard%C3%ADn%20del%20Turia%2C%20Valencia",
     "rsvpDeadline": "2027-05-10",
     "registryClosesAt": "2027-05-23T23:59",
-    "babyName": "Lucía"
+    "babyName": "Alex"
   },
   "gifts": [
     {

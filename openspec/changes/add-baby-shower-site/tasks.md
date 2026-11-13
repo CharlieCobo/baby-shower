@@ -19,11 +19,11 @@
 - [x] 3.4 Adaptadores Firestore (reserva/liberación con transacción, `onSnapshot`)
 
 ## 4. UI invitados
-- [ ] 4.1 Bootstrap de auth anónima silenciosa; layout con barra de navegación inferior (Invitación · Regalos · RSVP)
-- [ ] 4.2 Invitación (`event-info`), según la pantalla de Stitch: datos de `config/event`, cuenta atrás, Maps, añadir a calendario (.ics + Google), Open Graph con la invitación 600×900
-- [ ] 4.3 Lista de regalos, según las pantallas de Stitch: tarjetas con imagen o icono y precio orientativo, filtros, estados (disponible / lo traes tú / agotado / lista cerrada), bottom sheet de confirmación, errores de concurrencia
-- [ ] 4.4 Formulario RSVP con alergias, validación, fuera de plazo, pantalla de gracias y copia local para "Cambiar mi respuesta"
-- [ ] 4.5 Accesibilidad básica (foco, labels, contraste) y revisión mobile a 360 px
+- [x] 4.1 Bootstrap de auth anónima silenciosa; layout con barra de navegación inferior (Invitación · Regalos · RSVP)
+- [x] 4.2 Invitación (`event-info`), según la pantalla de Stitch: datos de `config/event`, cuenta atrás, Maps, añadir a calendario (.ics + Google), Open Graph con la invitación 600×900 (`public/og.png` generada con `pnpm og`)
+- [x] 4.3 Lista de regalos, según las pantallas de Stitch: tarjetas con imagen o icono y precio orientativo, filtros, estados (disponible / lo traes tú / agotado / lista cerrada), bottom sheet de confirmación, errores de concurrencia
+- [x] 4.4 Formulario RSVP con alergias, validación, fuera de plazo, pantalla de gracias y copia local para "Cambiar mi respuesta"
+- [x] 4.5 Accesibilidad básica (foco, labels, contraste) y revisión mobile a 360 px
 
 ## 5. Admin
 - [ ] 5.1 Login Google + guard por allowlist (lectura de `config/admins`), con las pantallas de inicio de sesión y acceso denegado de Stitch

@@ -200,6 +200,6 @@ describe('getEvent', () => {
     const backend = createInMemoryBackend({ gifts: [], event: null })
     expect(await getEvent(backend)()).toBeNull()
     backend.control.setEvent(makeEvent())
-    expect(await getEvent(backend)()).toMatchObject({ title: 'Baby Shower de Lucía' })
+    expect(await getEvent(backend)()).toMatchObject({ title: 'Baby Shower de Alex' })
   })
 })

@@ -44,7 +44,7 @@ context: |
   - Admin: Carlos y su pareja (cuentas Google en allowlist).
   - Datos del evento en `config/event` (Firestore), editables desde el admin. Valores
     del seed aún pendientes (fecha, lugar, límite RSVP, cierre de lista, nombre de la
-    bebé; los diseños usan "Lucía").
+    bebé: Alex — los diseños de Stitch usan "Lucía" como ejemplo).
 
   ## Restricciones
   - Invitados sin cuenta ni login visible.

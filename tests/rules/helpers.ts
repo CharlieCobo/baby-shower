@@ -97,13 +97,13 @@ export function giftData(overrides: DocumentData = {}): DocumentData {
 
 export function eventData(overrides: DocumentData = {}): DocumentData {
   return {
-    title: 'Baby Shower de Lucía',
+    title: 'Baby Shower de Alex',
     startsAt: hoursFromNow(24 * 30),
     endsAt: hoursFromNow(24 * 30 + 4),
     place: 'Jardines La Rosaleda, Valencia',
     mapsUrl: 'https://maps.google.com/?q=Valencia',
     rsvpDeadline: hoursFromNow(24 * 20),
-    babyName: 'Lucía',
+    babyName: 'Alex',
     ...overrides,
   }
 }

@@ -32,7 +32,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              group: ['firebase', 'firebase/*', '@firebase/*'],
+              regex: '^(firebase|@firebase)(/.*)?$',
               message:
                 'Solo src/infrastructure puede importar Firebase; usa los puertos de application/.',
             },

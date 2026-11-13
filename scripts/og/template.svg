@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900">
+  <!-- Invitación 600×900 del diseño "Dulce Espera" de Stitch, como plantilla:
+       los {{MARCADORES}} los rellena scripts/og/render.ts con los datos reales. -->
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&amp;family=Nunito:wght@700;800;900&amp;display=block');
+      .title { font-family: 'Baloo 2', cursive, sans-serif; font-weight: 800; }
+      .text { font-family: 'Nunito', sans-serif; }
+    </style>
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#4A1F3D" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="900" fill="#FCE8F0" />
+
+  <g opacity="0.95">
+    <rect x="180" y="48" width="18" height="6" rx="3" fill="#9ED9C8" transform="rotate(-25 189 51)" />
+    <rect x="400" y="42" width="18" height="6" rx="3" fill="#F7D774" transform="rotate(35 409 45)" />
+    <rect x="295" y="28" width="18" height="6" rx="3" fill="#F4A6C4" transform="rotate(12 304 31)" />
+    <rect x="110" y="165" width="18" height="6" rx="3" fill="#C9B3E6" transform="rotate(45 119 168)" />
+    <rect x="480" y="160" width="18" height="6" rx="3" fill="#9ED9C8" transform="rotate(-30 489 163)" />
+    <rect x="70" y="320" width="18" height="6" rx="3" fill="#F7D774" transform="rotate(20 79 323)" />
+    <rect x="520" y="315" width="18" height="6" rx="3" fill="#F4A6C4" transform="rotate(-40 529 318)" />
+    <rect x="115" y="490" width="18" height="6" rx="3" fill="#9ED9C8" transform="rotate(50 124 493)" />
+    <rect x="475" y="495" width="18" height="6" rx="3" fill="#C9B3E6" transform="rotate(-20 484 498)" />
+    <rect x="80" y="610" width="18" height="6" rx="3" fill="#F4A6C4" transform="rotate(15 89 613)" />
+    <rect x="510" y="605" width="18" height="6" rx="3" fill="#F7D774" transform="rotate(65 519 608)" />
+  </g>
+
+  <g transform="translate(68, 70) rotate(-32)">
+    <rect x="-6" y="24" width="12" height="96" rx="6" fill="#FFFFFF" />
+    <circle r="48" fill="#C9B3E6" />
+    <path d="M 0 0 A 7 7 0 0 1 7 0 A 14 14 0 0 1 -14 0 A 22 22 0 0 1 22 0 A 30 30 0 0 1 -30 0 A 38 38 0 0 1 38 0" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" />
+  </g>
+  <g transform="translate(532, 68) rotate(32)">
+    <rect x="-6" y="24" width="12" height="96" rx="6" fill="#FFFFFF" />
+    <circle r="48" fill="#F4A6C4" />
+    <path d="M 0 0 A 7 7 0 0 1 7 0 A 14 14 0 0 1 -14 0 A 22 22 0 0 1 22 0 A 30 30 0 0 1 -30 0 A 38 38 0 0 1 38 0" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" />
+  </g>
+
+  <g transform="translate(42, 420) rotate(-16)">
+    <polygon points="-12,-4 -36,-18 -34,18" fill="#9ED9C8" opacity="0.85" />
+    <polygon points="12,-4 36,-18 34,18" fill="#9ED9C8" opacity="0.85" />
+    <ellipse rx="22" ry="18" fill="#9ED9C8" />
+    <path d="M -6,-15 Q -4,0 -6,15 M 6,-15 Q 4,0 6,15" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round" />
+  </g>
+  <g transform="translate(558, 420) rotate(16)">
+    <polygon points="-12,-4 -36,-18 -34,18" fill="#F7D774" opacity="0.85" />
+    <polygon points="12,-4 36,-18 34,18" fill="#F7D774" opacity="0.85" />
+    <ellipse rx="22" ry="18" fill="#F7D774" />
+    <path d="M -6,-15 Q -4,0 -6,15 M 6,-15 Q 4,0 6,15" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round" />
+  </g>
+
+  <text class="text" x="300" y="105" text-anchor="middle" fill="#7A4A6B" font-size="15" font-weight="800" letter-spacing="5">UNA DULCE ESPERA</text>
+  <text class="title" x="300" y="196" text-anchor="middle" fill="#4A1F3D" font-size="92" letter-spacing="-1">Baby</text>
+  <text class="title" x="300" y="278" text-anchor="middle" fill="#4A1F3D" font-size="92" letter-spacing="-1">Shower</text>
+  <text class="title" x="300" y="328" text-anchor="middle" fill="#4A1F3D" font-size="34" font-weight="700">{{SUBTITLE}}</text>
+  <rect x="250" y="352" width="100" height="4" rx="2" fill="#F1C4D8" />
+
+  <g transform="translate(300, 396)">
+    <rect x="-140" y="-18" width="36" height="36" rx="18" fill="#FFF0F6" stroke="#C2789D" stroke-width="1.5" />
+    <g transform="translate(-130, -8)" stroke="#7A4A6B" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect y="2" width="16" height="14" rx="2" />
+      <line y1="6" x2="16" y2="6" />
+      <line x1="4" x2="4" y2="3" />
+      <line x1="12" x2="12" y2="3" />
+    </g>
+    <text class="text" x="-90" text-anchor="start" fill="#4A1F3D" font-size="19" font-weight="800">{{DATE}}</text>
+    <text class="text" x="-90" y="19" text-anchor="start" fill="#7A4A6B" font-size="15" font-weight="700">{{TIME}}</text>
+  </g>
+  <g transform="translate(300, 466)">
+    <rect x="-140" y="-18" width="36" height="36" rx="18" fill="#FFF0F6" stroke="#C2789D" stroke-width="1.5" />
+    <g transform="translate(-130, -9)" stroke="#7A4A6B" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 1c-3.3 0-6 2.7-6 6 0 4.5 6 10 6 10s6-5.5 6-10c0-3.3-2.7-6-6-6z" />
+      <circle cx="8" cy="7" r="2.2" />
+    </g>
+    <text class="text" x="-90" text-anchor="start" fill="#4A1F3D" font-size="19" font-weight="800">{{PLACE_NAME}}</text>
+    <text class="text" x="-90" y="19" text-anchor="start" fill="#7A4A6B" font-size="15" font-weight="700">{{PLACE_ADDRESS}}</text>
+  </g>
+
+  <g>
+    <circle cx="90" cy="830" r="95" fill="#C9B3E6" />
+    <circle cx="510" cy="830" r="100" fill="#9ED9C8" />
+    <circle cx="300" cy="850" r="110" fill="#F7D774" />
+    <circle cx="0" cy="910" r="115" fill="#F4A6C4" />
+    <circle cx="190" cy="885" r="105" fill="#9ED9C8" />
+    <circle cx="410" cy="880" r="110" fill="#F4A6C4" />
+    <circle cx="600" cy="910" r="115" fill="#C9B3E6" />
+    <circle cx="300" cy="915" r="95" fill="#F7D774" />
+  </g>
+
+  <g transform="translate(50, 645)" filter="url(#card-shadow)">
+    <rect width="500" height="170" rx="24" fill="#FFFFFF" />
+    <g transform="translate(40, 37)">
+      <circle cx="48" cy="48" r="48" fill="#FFF0F6" stroke="#C2789D" stroke-width="2" stroke-dasharray="6,5" />
+      <path d="M48 70 C 20 52 22 30 36 27 C 42 26 46 29 48 33 C 50 29 54 26 60 27 C 74 30 76 52 48 70 Z" fill="#F4A6C4" />
+    </g>
+    <g transform="translate(170, 42)">
+      <rect width="68" height="24" rx="12" fill="#FFF0F6" stroke="#C2789D" stroke-width="1.2" />
+      <text class="text" x="34" y="16" text-anchor="middle" fill="#4A1F3D" font-size="11" font-weight="900" letter-spacing="1">RSVP</text>
+      <text class="title" y="48" text-anchor="start" fill="#4A1F3D" font-size="22">Confirma tu asistencia</text>
+      <text class="text" y="74" text-anchor="start" fill="#7A4A6B" font-size="14.5" font-weight="700">en la web, con un toque</text>
+      <text class="text" y="96" text-anchor="start" fill="#C2789D" font-size="13" font-weight="800">{{DEADLINE}}</text>
+    </g>
+  </g>
+</svg>

@@ -155,7 +155,7 @@ describe('EventRepository (Firestore)', () => {
   it('Datos del evento: lee y convierte las fechas', async () => {
     await seedBase({ event: { registryClosesAt: hoursFromNow(5) } })
     const event = await createFirestoreEventRepository(unauthenticated()).get()
-    expect(event).toMatchObject({ title: 'Baby Shower de Lucía', babyName: 'Lucía' })
+    expect(event).toMatchObject({ title: 'Baby Shower de Alex', babyName: 'Alex' })
     expect(event?.startsAt).toBeInstanceOf(Date)
     expect(event?.registryClosesAt).toBeInstanceOf(Date)
   })

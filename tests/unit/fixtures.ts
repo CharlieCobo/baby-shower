@@ -13,7 +13,7 @@ export const makeGift = (overrides: Partial<Gift> = {}): Gift => ({
 })
 
 export const makeEvent = (overrides: Partial<EventInfo> = {}): EventInfo => ({
-  title: 'Baby Shower de Lucía',
+  title: 'Baby Shower de Alex',
   startsAt: new Date('2027-05-24T15:00:00Z'), // 17:00 Madrid
   endsAt: new Date('2027-05-24T19:00:00Z'),
   place: 'Jardines La Rosaleda',
