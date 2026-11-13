@@ -1,10 +1,166 @@
+// Reglas de seguridad de Firestore: fuente de verdad de los permisos.
+// Diseño y justificación en openspec/changes/add-baby-shower-site/design.md (§ 4).
+// Tests en tests/rules/ (pnpm test:rules).
 rules_version = '2';
-
-// Provisional: todo cerrado hasta implementar las reglas de design.md (tarea 2.1).
 service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+  match /databases/{db}/documents {
+
+    function signedIn() { return request.auth != null; }
+
+    function adminsPath() { return /databases/$(db)/documents/config/admins; }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && exists(adminsPath())
+        && request.auth.token.email in get(adminsPath()).data.emails;
+    }
+
+    function onlyChanged(keys) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys);
+    }
+
+    // config/event es opcional: sin documento o sin la fecha, no hay plazo.
+    function eventPath() { return /databases/$(db)/documents/config/event; }
+    function registryOpen() {
+      return !exists(eventPath())
+        || !('registryClosesAt' in get(eventPath()).data)
+        || request.time < get(eventPath()).data.registryClosesAt;
+    }
+    function rsvpOpen() {
+      return !exists(eventPath())
+        || !('rsvpDeadline' in get(eventPath()).data)
+        || request.time <= get(eventPath()).data.rsvpDeadline;
+    }
+
+    function giftPath(giftId) { return /databases/$(db)/documents/gifts/$(giftId); }
+    function myReservationPath(giftId) {
+      return /databases/$(db)/documents/reservations/$(giftId + '_' + request.auth.uid);
+    }
+
+    function optString(d, key, max) {
+      return !(key in d) || (d[key] is string && d[key].size() <= max);
+    }
+    function optHttpsUrl(d, key) {
+      return !(key in d) || (d[key] is string && d[key].size() <= 2000 && d[key].matches('https://.+'));
+    }
+    function validGift(d) {
+      return d.keys().hasOnly(['title', 'description', 'url', 'imageUrl', 'priceEur',
+                               'category', 'quantity', 'reservedCount', 'order', 'active', 'updatedAt'])
+        && d.title is string && d.title.size() > 0 && d.title.size() <= 120
+        && optString(d, 'description', 1000)
+        && optHttpsUrl(d, 'url')
+        && optHttpsUrl(d, 'imageUrl')
+        && (!('priceEur' in d) || (d.priceEur is int && d.priceEur >= 0 && d.priceEur <= 10000))
+        && d.category in ['ropa', 'higiene', 'paseo', 'habitacion', 'juguetes']
+        && d.quantity is int && d.quantity >= 1
+        && d.reservedCount is int && d.reservedCount >= 0 && d.reservedCount <= d.quantity
+        && d.order is int
+        && d.active is bool
+        && d.updatedAt == request.time;
+    }
+
+    match /gifts/{giftId} {
+      allow read: if true;
+      allow create: if isAdmin()
+        && validGift(request.resource.data)
+        && request.resource.data.reservedCount == 0;
+      allow delete: if isAdmin();
+      allow update: if
+        // admin: edita cualquier campo; el contador solo se mantiene o baja en 1 (liberación)
+        (isAdmin()
+          && validGift(request.resource.data)
+          && (request.resource.data.reservedCount == resource.data.reservedCount
+              || request.resource.data.reservedCount == resource.data.reservedCount - 1))
+        ||
+        // invitado: solo reservar o liberar 1 unidad, con la lista abierta
+        (signedIn()
+          && registryOpen()
+          && onlyChanged(['reservedCount', 'updatedAt'])
+          && request.resource.data.updatedAt == request.time
+          && (
+            // reservar
+            (request.resource.data.reservedCount == resource.data.reservedCount + 1
+              && request.resource.data.reservedCount <= resource.data.quantity
+              && resource.data.active == true
+              && !exists(myReservationPath(giftId))
+              && existsAfter(myReservationPath(giftId)))
+            ||
+            // liberar
+            (request.resource.data.reservedCount == resource.data.reservedCount - 1
+              && request.resource.data.reservedCount >= 0
+              && exists(myReservationPath(giftId))
+              && !existsAfter(myReservationPath(giftId)))
+          ));
+    }
+
+    match /reservations/{resId} {
+      // el invitado solo puede leer las suyas (para saber qué puede liberar)
+      allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow create: if signedIn()
+        && registryOpen()
+        && request.resource.data.keys().hasOnly(['giftId', 'uid', 'createdAt'])
+        && request.resource.data.giftId is string
+        && request.resource.data.uid == request.auth.uid
+        && resId == request.resource.data.giftId + '_' + request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && getAfter(giftPath(request.resource.data.giftId)).data.reservedCount
+           == get(giftPath(request.resource.data.giftId)).data.reservedCount + 1;
+      allow delete: if
+        // admin: libera cualquier reserva (contador −1) o la borra junto con su regalo
+        (isAdmin()
+          && (!existsAfter(giftPath(resource.data.giftId))
+              || getAfter(giftPath(resource.data.giftId)).data.reservedCount
+                 == get(giftPath(resource.data.giftId)).data.reservedCount - 1))
+        ||
+        // invitado: solo la suya, con la lista abierta y decrementando el contador
+        (signedIn()
+          && registryOpen()
+          && resource.data.uid == request.auth.uid
+          && getAfter(giftPath(resource.data.giftId)).data.reservedCount
+             == get(giftPath(resource.data.giftId)).data.reservedCount - 1);
+      allow update: if false;
+    }
+
+    match /rsvps/{uid} {
+      function validRsvp(d) {
+        return d.keys().hasOnly(['name', 'attending', 'companions', 'dietary', 'message', 'updatedAt'])
+          && d.name is string && d.name.size() > 0 && d.name.size() <= 80
+          && d.attending is bool
+          && d.companions is int && d.companions >= 0 && d.companions <= 10
+          && (d.attending == true || d.companions == 0)
+          && optString(d, 'dietary', 200)
+          && optString(d, 'message', 500)
+          && d.updatedAt == request.time;
+      }
+      allow read, delete: if isAdmin();
+      allow create, update: if signedIn()
+        && uid == request.auth.uid
+        && rsvpOpen()
+        && validRsvp(request.resource.data);
+    }
+
+    match /config/event {
+      function validEvent(d) {
+        return d.keys().hasOnly(['title', 'startsAt', 'endsAt', 'place', 'mapsUrl',
+                                 'rsvpDeadline', 'registryClosesAt', 'babyName'])
+          && d.title is string && d.title.size() > 0 && d.title.size() <= 120
+          && d.startsAt is timestamp
+          && d.endsAt is timestamp && d.endsAt > d.startsAt
+          && d.place is string && d.place.size() <= 300
+          && d.mapsUrl is string && d.mapsUrl.size() <= 2000 && d.mapsUrl.matches('https://.+')
+          && d.rsvpDeadline is timestamp
+          && (!('registryClosesAt' in d) || d.registryClosesAt is timestamp)
+          && optString(d, 'babyName', 60);
+      }
+      allow read: if true;
+      allow create, update: if isAdmin() && validEvent(request.resource.data);
+      allow delete: if false;
+    }
+
+    match /config/admins {
+      // el cliente detecta si es admin intentando leer este documento
+      allow read: if isAdmin();
+      allow write: if false; // solo consola / Admin SDK
     }
   }
 }

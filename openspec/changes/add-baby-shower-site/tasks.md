@@ -7,8 +7,8 @@
 - [x] 1.6 Workflow de GitHub Actions con pnpm: lint, typecheck, tests unitarios, tests de reglas en emulador, build con `404.html` y despliegue a GitHub Pages
 
 ## 2. Seguridad primero
-- [ ] 2.1 Escribir `firestore.rules` según `design.md`
-- [ ] 2.2 Tests de reglas con `@firebase/rules-unit-testing` cubriendo TODOS los escenarios permitidos y denegados de las specs `gift-registry`, `rsvp`, `admin` y `event-info`
+- [x] 2.1 Escribir `firestore.rules` según `design.md`
+- [x] 2.2 Tests de reglas con `@firebase/rules-unit-testing` cubriendo TODOS los escenarios permitidos y denegados de las specs `gift-registry`, `rsvp`, `admin` y `event-info`
 - [ ] 2.3 Script `seed` (Admin SDK) para crear `config/admins`, `config/event` y regalos iniciales desde un JSON (credenciales fuera del repo)
 - [ ] 2.4 Crear `test-map.md` (escenario → test, con tipo `rules` / `unit` / `e2e` / `manual`; los `manual` con su checklist) y desplegar las reglas
 
