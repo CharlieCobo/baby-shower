@@ -1,0 +1,32 @@
+{
+  "admins": ["tu-email@gmail.com", "email-de-tu-pareja@gmail.com"],
+  "event": {
+    "title": "Baby Shower de Lucía",
+    "startsAt": "2027-05-24T17:00",
+    "endsAt": "2027-05-24T21:00",
+    "place": "Jardines La Rosaleda · Calle Mayor, 42, Valencia",
+    "mapsUrl": "https://maps.app.goo.gl/xxxxxxxx",
+    "rsvpDeadline": "2027-05-10",
+    "registryClosesAt": "2027-05-23T23:59",
+    "babyName": "Lucía"
+  },
+  "gifts": [
+    {
+      "id": "panales-talla-1",
+      "title": "Pañales talla 1",
+      "category": "higiene",
+      "quantity": 4,
+      "description": "Cualquier marca nos vale.",
+      "priceEur": 12
+    },
+    {
+      "id": "portabebes",
+      "title": "Portabebés ergonómico",
+      "category": "paseo",
+      "quantity": 1,
+      "url": "https://www.example.com/portabebes",
+      "imageUrl": "https://www.example.com/portabebes.jpg",
+      "priceEur": 90
+    }
+  ]
+}

@@ -20,7 +20,9 @@
     "openspec": "openspec",
     "emulators": "firebase emulators:start --only auth,firestore",
     "test:rules": "firebase emulators:exec --only firestore \"vitest run --config vitest.rules.config.ts\"",
-    "deploy:rules": "firebase deploy --only firestore:rules"
+    "deploy:rules": "firebase deploy --only firestore:rules",
+    "seed:dev": "tsx scripts/seed-dev.ts",
+    "seed:prod": "tsx scripts/seed-prod.ts"
   },
   "dependencies": {
     "firebase": "^13.3.0",
@@ -31,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@faker-js/faker": "^10.6.0",
     "@firebase/rules-unit-testing": "^6.0.0",
     "@fission-ai/openspec": "^2.0.0",
     "@tailwindcss/vite": "^4.3.5",
@@ -45,11 +48,13 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
+    "firebase-admin": "^14.5.1",
     "firebase-tools": "^15.36.0",
     "globals": "^17.14.0",
     "jsdom": "^31.0.1",
     "prettier": "^3.10.1",
     "tailwindcss": "^4.3.5",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.2",
     "vite": "^8.3.8",

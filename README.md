@@ -25,6 +25,17 @@ y arranca `pnpm emulators` en otra terminal.
 - `pnpm emulators`: emuladores de Auth y Firestore
 - `pnpm deploy:rules`: despliega `firestore.rules`
 
+## Datos de prueba y datos reales
+
+- `pnpm seed:dev`: con el emulador arrancado (`pnpm emulators`), lo llena con datos de prueba
+  generados con Faker: evento, ~20 regalos, reservas y 30 RSVPs. Opciones: `--lista-cerrada`,
+  `--rsvp-cerrado`, `--sin-evento`. Los admins salen de `SEED_ADMIN_EMAILS` (por defecto
+  `admin@example.com`).
+- `pnpm seed:prod`: carga los datos reales (admins, evento y regalos) desde
+  `scripts/seed-data.local.json` (plantilla en `scripts/seed-data.example.json`). Necesita
+  `service-account.json` en la raíz (fuera del repo) y pide confirmación. Con `--emulator`
+  se prueba contra el emulador.
+
 ## Despliegue
 
 Cada push a `main` pasa lint, tipos y tests y, si todo va bien, despliega en
